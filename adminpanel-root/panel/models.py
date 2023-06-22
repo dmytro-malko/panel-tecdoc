@@ -5,10 +5,16 @@ class Marks(models.Model):
     mark_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, verbose_name="Mark name")
 
-class Models(models.Model):
-    model_id = models.AutoField(primary_key=True)
-    mark_id = models.CharField(max_length=5, null=True)
-    name = models.CharField(max_length=255, verbose_name="Model name")
+# class Models(models.Model):
+#     model_id = models.AutoField(primary_key=True)
+#     mark_id = models.IntegerField(null=True)
+#     name = models.CharField(max_length=255, verbose_name="Model name")
+
+
+class MarksModels(models.Model):
+    car_id = models.AutoField(primary_key=True)
+    mark = models.CharField(max_length=255, verbose_name="Mark name")
+    model = models.CharField(max_length=255, verbose_name="Model name")
 
 class Manufacturer(models.Model):
     manufacturer_id = models.AutoField(primary_key=True)

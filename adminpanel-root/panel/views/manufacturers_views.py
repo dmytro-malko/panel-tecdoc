@@ -22,8 +22,6 @@ def show(request):
         manufacturer_id = request.POST['manufacturerId']
         name = request.POST['manufacturerName']
 
-        print(f"{manufacturer_id}  {name}")
-
         manufacturers_api.create(manufacturer_id, name)
         return redirect("/manufacturers/")
     

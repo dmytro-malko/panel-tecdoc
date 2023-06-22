@@ -82,10 +82,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cars' %}">
+                    <a class="nav-link" href="#" id="carsSections">
     		            <i style="margin-right: 10px" class="fa-solid fa-car"></i>
                         <span>Автомобили</span>
                     </a>
+                    <div id="collapseTwoCar" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="py-2 mt-3 collapse-inner shadow">
+                            <a class="collapse-item" href="{% url 'marks' %}">Марки</a>
+                            <a class="collapse-item" href="{% url 'models' %}">Модели</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'bots' %}">
@@ -155,7 +161,10 @@
         </style>
 	<script src="https://kit.fontawesome.com/f5a0d45f13.js" crossorigin="anonymous"></script>
         <script>
-
+            document.querySelector("#carsSections").onclick = function() {
+                document.querySelector("#carsSections").classList.toggle("collapsed");
+                document.querySelector("#collapseTwoCar").classList.toggle("show");
+            }
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha256-yE5LLp5HSQ/z+hJeCqkz9hdjNkk1jaiGG0tDCraumnA=" crossorigin="anonymous"></script>

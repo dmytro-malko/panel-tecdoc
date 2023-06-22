@@ -1,0 +1,99 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+
+
+{% block data %}
+<div class="card shadow mb-4">
+    <div class="card-header d-flex align-items-center">
+        <h5 class="mr-auto m-0" style="display: flex; align-items: baseline;">
+            <i style="margin-right: 10px" class="fa-solid fa-envelopes-bulk"></i>
+             Марки
+        </h5>
+        <button class="btn btn-primary" onclick="addMark()">Добавить Марку</button>
+    </div>
+    <div class="card-body">
+        <div id="dataTable_goods_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="row">
+                <div class="marks-list">
+                    {% for mark in marks %}
+                        <span>
+                            {{mark.name}}
+                            <i class="fa-regular fa-pen-to-square text-right" style="cursor: pointer; margin: 10px"></i>
+                            <a href="{% url 'mark_delete' mark.mark_id %}" title="Удалить" class="text-gray-900 text-right" style="cursor: pointer; margin: 10px">
+                                <i class="fa-sharp fa-solid fa-trash"></i>
+                            </a>
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="addMarkModal" class="modal" style="display: none;">
+        <div role="document" class="modal-dialog" style="min-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="exampleModalLabel" class="modal-title">Добавить</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="css-1c1nuln" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Название Марки</label>
+                            <input type="text" value="" name="mark_name" id="mark_name" placeholder="Название" class="form-control">
+                        </div>
+                        <div style="text-align: center;">
+                            <button type="submit" class="btn btn-success">Добавить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+            
+        function addMark() {
+            
+            const modal = document.getElementById('addMarkModal');
+            modal.style.display = "flex";
+            window.addEventListener("click", function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            
+            })
+        };
+
+    </script>
+    <style>
+        .modal-header {
+            background: linear-gradient(#141e30, #243b55) no-repeat center center fixed;
+        }
+        .modal-body {
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+        }
+        .marks-list {
+            grid-template-columns: repeat(5, 1fr);
+            display: grid;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .marks-list span {
+            padding: 11px 35px 11px 19px;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            break-inside: avoid-column;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 3px;
+            border: 1px solid rgb(225, 231, 236);
+            color: rgb(96, 105, 117);
+            transition: all 0.3s ease 0s;
+            position: relative;
+        }
+    </style>
+</div>
+{% endblock data %}

@@ -9,9 +9,18 @@ urlpatterns = [
     path('users/', users_views.show, name='users'),
     path('manufacturers/', manufacturers_views.show, name='manufacturers'),
     path('articles/', articles_views.show, name='articles'),
+
     path('cars/', cars_views.show, name='cars'),
+    path('cars/mark_delete/<int:mark_id>', cars_views.show, name='mark_delete'),
+    path('cars/model_delete/<int:model_id>', cars_views.show, name='model_delete'),
+    path('marks/', cars_views.show_marks, name='marks'),
+    path('marks/mark_delete/<int:mark_id>', cars_views.delete_mark, name='mark_delete'),
+    path('models/', cars_views.show_models, name='models'),
+    path('models/model_delete/<int:car_id>', cars_views.delete_model, name='model_delete'),
+
     path('bots/', bots_views.show, name='bots'),
     path('olx/', olx_views.show, name='olx'),
+
     path('manufacturer/update/<int:manufacturer_id>', manufacturers_views.update, name="manufacturer_update"),
     path('manufacturer/delete/<int:manufacturer_id>', manufacturers_views.delete, name="manufacturer_delete"),
 ]

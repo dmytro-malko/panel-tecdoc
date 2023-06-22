@@ -1,16 +1,11 @@
 from django.contrib import admin
-from panel.models import (Marks, Models, Articles, Manufacturer)
+from panel.models import (Marks, Articles, Manufacturer)
 
 # Register your models here.
 @admin.register(Marks)
 class MarkTable(admin.ModelAdmin):
     list_display = ("mark_id", "name")
     fields = ["name"]
-
-@admin.register(Models)
-class ModelTable(admin.ModelAdmin):
-    list_display = ("model_id", "mark_id", "name")
-    fields = ["mark_id", "name"]
 
 @admin.register(Manufacturer)
 class ManufacturersTable(admin.ModelAdmin):

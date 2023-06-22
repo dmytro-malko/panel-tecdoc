@@ -1,0 +1,117 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+
+
+{% block data %}
+<div class="card shadow mb-4">
+    <div class="card-header d-flex align-items-center">
+        <h5 class="mr-auto m-0" style="display: flex; align-items: baseline;">
+            <i style="margin-right: 10px" class="fa-solid fa-envelopes-bulk"></i>
+             Модели
+        </h5>
+        <button class="btn btn-primary" onclick="addModel()">Добавить Модель</button>
+    </div>
+    <div class="card-body">
+        <div id="dataTable_goods_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div class="model-list">
+                    {% for mark in marks %}
+                    <div class="mark-name">{{mark.name}}</div>
+                        <div class="model-item-list">
+                            {% for model in models %}
+                                {% if mark.name == model.mark %}
+                                    <span>
+                                        {{model.model}}
+                                        <i class="fa-regular fa-pen-to-square text-right" style="cursor: pointer; margin: 10px; margin-left: 30%;"></i>
+                                        <a href="{% url 'model_delete' model.car_id %}" title="Удалить" class="text-gray-900 text-right" style="cursor: pointer; margin: 10px">
+                                            <i class="fa-sharp fa-solid fa-trash"></i>
+                                        </a>
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    <div id="addModelModal" class="modal" style="display: none;">
+        <div role="document" class="modal-dialog" style="min-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="exampleModalLabel" class="modal-title">Добавить</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="css-1c1nuln" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="cars">Выберете Марку</label>
+                            <select name="mark_name" id="cars" class="form-control">
+                                {% for mark in marks %}
+                                    <option value="{{mark.name}}">{{mark.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Название Модели</label>
+                            <input type="text" value="" name="model_name" id="model_name" placeholder="Название" class="form-control">
+                        </div>
+                        <div style="text-align: center;">
+                            <button type="submit" class="btn btn-success">Добавить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+            
+        function addModel() {
+            
+            const modal = document.getElementById('addModelModal');
+            modal.style.display = "flex";
+            window.addEventListener("click", function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            
+            })
+        };
+
+    </script>
+    <style>
+        .modal-header {
+            background: linear-gradient(#141e30, #243b55) no-repeat center center fixed;
+        }
+        .modal-body {
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+        }
+        .mark-name{
+            font-size: 18px;
+            margin-bottom: 16px;
+            margin-top: 16px;
+        }
+        .model-item-list {
+            grid-template-columns: repeat(4, 1fr);
+            display: grid;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .model-item-list span {
+            padding: 11px 5px 11px 19px;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            break-inside: avoid-column;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 3px;
+            border: 1px solid rgb(225, 231, 236);
+            color: rgb(96, 105, 117);
+            transition: all 0.3s ease 0s;
+            position: relative;
+        }
+    </style>
+</div>
+{% endblock data %}
