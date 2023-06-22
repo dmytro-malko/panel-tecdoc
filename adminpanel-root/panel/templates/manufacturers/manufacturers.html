@@ -1,0 +1,107 @@
+{% extends 'panel/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+
+
+{% block data %}
+<div class="card shadow mb-4">
+    <div class="card-header d-flex align-items-center">
+        <h5 class="mr-auto m-0" style="display: flex; align-items: baseline;">
+            <i style="margin-right: 10px" class="fa-solid fa-envelopes-bulk"></i>
+             Производители
+        </h5>
+        <button class="btn btn-primary" onclick="addManufacturer()">Добавить производителя</button>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div id="dataTable_goods_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered text-gray-700 dataTable no-footer" id="dataTable_goods" role="grid" aria-describedby="dataTable_goods_info" style="width: 100%;" width="100%" cellspacing="0">
+                            <thead>
+                                <tr style="font-size: 13px" role="row">
+                                    <th class="font-weight-normal text-uppercase sorting">ID</th>
+                                    <th class="font-weight-normal text-uppercase sorting">Название</th>
+                                    <th class="font-weight-normal text-uppercase text-right">Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody class="ui-sortable">
+                                {% for manufacturer in manufacturers %}
+                                    <tr class="ui-sortable-handle odd">
+                                        <td class="text-left">
+                                            <span class="text-gray-900 font-weight-bold">
+                                                {{ manufacturer.manufacturer_id }}
+                                            </span>
+                                        </td>
+                                        <td class="text-left text-gray-900">
+                                            <span class="text-gray-900 font-weight-normal">
+                                                {{ manufacturer.name }}
+                                            </span>
+                                        </td>
+                                        <td class="text-right">
+                                            <a href="{% url 'manufacturer_update' manufacturer.manufacturer_id %}" title="Редактировать" class="text-gray-900" style="cursor: pointer; margin: 10px">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                            <a href="{% url 'manufacturer_delete' manufacturer.manufacturer_id %}" title="Удалить" class="text-gray-900" style="cursor: pointer; margin: 10px">
+                                                <i class="fa-sharp fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="addManufacturerModal" class="modal" style="display: none;">
+            <div role="document" class="modal-dialog" style="min-width: 400px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="exampleModalLabel" class="modal-title">Добавить</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="css-1c1nuln" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Номер поставщика из максиматора</label>
+                                <input type="number" value="" name="manufacturerId" id="manufacturerId" placeholder="12345" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Название</label>
+                                <input type="text" value="" name="manufacturerName" id="manufacturerName" placeholder="Название" class="form-control">
+                            </div>
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-success">Добавить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            
+            function addManufacturer() {
+                
+                const modal = document.getElementById('addManufacturerModal');
+                modal.style.display = "flex";
+                window.addEventListener("click", function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                
+                })
+            };
+    
+        </script>
+        <style>
+            .modal-header {
+                background: linear-gradient(#141e30, #243b55) no-repeat center center fixed;
+            }
+            .modal-body {
+                box-shadow: 0 15px 25px rgba(0,0,0,.6);
+            }
+        </style>
+</div>
+{% endblock data %}

@@ -1,0 +1,23 @@
+{% extends "panel/base.html" %}
+
+{% block data %}
+<form class="row" name="{% url 'manufacturer_update' manufacturer.manufacturer_id %}" method="post">
+    {% csrf_token %}
+    <div class="col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-left"><i class="fas fa-fw fa-file-alt"></i>Редактирования производителя ID: {{ manufacturer.manufacturer_id }}</h6>
+            </div>
+            <div class="card-body p-5">
+                <div class="form-group text-left">
+                    <label>Название<span class="text-danger">*</span></label>
+                    <input id="manufacturer_name" name="manufacturer_name" class="form-control" placeholder="{{ manufacturer.name }}" value="">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary font-weight-bold py-2 px-4 mr-4">
+            <i class="fa fa-save mr-1"></i> Сохранить
+        </button>
+    </div>
+</form>
+{% endblock %}
