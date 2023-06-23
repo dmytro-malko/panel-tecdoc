@@ -4180,84 +4180,41 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 .breadcrumb-item.active{
     color:#858796
 }
-.pagination{
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
-    padding-left:0;
-    list-style:none;
-    border-radius:.35rem
+.pagination {
+    width: 185px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.5);
 }
-.page-link{
-    position:relative;
-    display:block;
-    padding:.5rem .75rem;
-    margin-left:-1px;
-    line-height:1.25;
-    color:#2c8cd5;
-    background-color:#fff;
-    border:1px solid #dddfeb
+.pagination li {
+    display: inline-block;
+    list-style: none;
 }
-.page-link:hover{
-    z-index:2;
-    color:#224abe;
-    text-decoration:none;
-    background-color:#eaecf4;
-    border-color:#dddfeb
+.pagination li a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    text-align: center;
+    text-decoration: none;
+    color: #252525;
+    border-radius: 4px;
+    margin: 5px;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
 }
-.page-link:focus{
-    z-index:2;
-    outline:0;
-    -webkit-box-shadow:0 0 0 .2rem rgba(78,115,223,.25);
-    box-shadow:0 0 0 .2rem rgba(78,115,223,.25)
+.pagination li a.enable:hover, .pagination li a.active {
+    color: #fff;
+    background:linear-gradient(#141e30, #243b55) no-repeat center center fixed;
 }
-.page-item:first-child .page-link{
-    margin-left:0;
-    border-top-left-radius:.35rem;
-    border-bottom-left-radius:.35rem
+.pagination li:first-child a {
+    border-radius: 40px 0 0 40px;
 }
-.page-item:last-child .page-link{
-    border-top-right-radius:.35rem;
-    border-bottom-right-radius:.35rem
-}
-.page-item.active .page-link{
-    z-index:1;
-    color:#fff;
-    background-color:#2c8cd5;
-    border-color:#2c8cd5
-}
-.page-item.disabled .page-link{
-    color:#858796;
-    pointer-events:none;
-    cursor:auto;
-    background-color:#fff;
-    border-color:#dddfeb
-}
-.pagination-lg .page-link{
-    padding:.75rem 1.5rem;
-    font-size:1.25rem;
-    line-height:1.5
-}
-.pagination-lg .page-item:first-child .page-link{
-    border-top-left-radius:.3rem;
-    border-bottom-left-radius:.3rem
-}
-.pagination-lg .page-item:last-child .page-link{
-    border-top-right-radius:.3rem;
-    border-bottom-right-radius:.3rem
-}
-.pagination-sm .page-link{
-    padding:.25rem .5rem;
-    font-size:.875rem;
-    line-height:1.5
-}
-.pagination-sm .page-item:first-child .page-link{
-    border-top-left-radius:.2rem;
-    border-bottom-left-radius:.2rem
-}
-.pagination-sm .page-item:last-child .page-link{
-    border-top-right-radius:.2rem;
-    border-bottom-right-radius:.2rem
+.pagination li:last-child a {
+    border-radius: 0 40px 40px 0;
 }
 .badge{
     display:inline-block;

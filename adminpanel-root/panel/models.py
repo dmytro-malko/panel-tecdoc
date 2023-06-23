@@ -22,10 +22,11 @@ class Manufacturer(models.Model):
 
 class Articles(models.Model):
     article_id = models.AutoField(primary_key=True)
-    manufacturer_id = models.CharField(max_length=5, null=True)
+    manufacturer_id = models.IntegerField(null=True)
     article = models.CharField(max_length=255)
     article_clean = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     quantity = models.CharField(max_length=5, null=True)
     stock_status = models.CharField(max_length=5, null=True)
     price = models.DecimalField(max_digits = 10 , decimal_places = 2 , null=True)
+    price_poland = models.DecimalField(max_digits = 10 , decimal_places = 2 , null=True)

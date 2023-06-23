@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from panel.db_api import manufacturers_api
 
@@ -9,11 +9,16 @@ def show(request):
     
     if request.method == "GET":
         manufacturers = manufacturers_api.get_all()
+        paginator = Paginator(manufacturers, 50)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         return render(
             request=request,
             template_name="manufacturers/manufacturers.html",
             context={
-            "manufacturers" : manufacturers,
+            "manufacturers" : page_obj.object_list,
+            "page_obj": page_obj
             }
         )
     

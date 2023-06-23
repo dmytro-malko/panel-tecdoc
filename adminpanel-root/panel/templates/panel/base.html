@@ -78,7 +78,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'articles' %}">
                         <i style="margin-right: 10px" class="fa-solid fa-store"></i>
-                        <span>Артикулы</span>
+                        <span>Товары</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -138,6 +138,21 @@
                         <!-- DataTales Example -->
                             {% block data %} {% endblock data %}
                     </div>
+                    {% if page_obj %}
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li><a class="enable" href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                        {% else%}
+                            <li><a>&lt;</a></li>
+                        {% endif %}
+                        <li><a class="active">{{ page_obj.number }}</a></li>
+                        {% if page_obj.has_next %}
+                            <li><a class="enable" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                        {% else%}
+                            <li><a class="disabled">&gt;</a></li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
@@ -146,7 +161,7 @@
         </div>
         <!-- End of Page Wrapper -->
         <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="https://tbiz.pro/#page-top">
+        <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
         </a>
         <!-- Logout Modal-->

@@ -9,9 +9,9 @@
     <div class="card-header d-flex align-items-center">
         <h5 class="mr-auto m-0" style="display: flex; align-items: baseline;">
             <i style="margin-right: 10px" class="fa-solid fa-envelopes-bulk"></i>
-             Производители
+             Товары
         </h5>
-        <button class="btn btn-primary" onclick="addManufacturer()">Добавить производителя</button>
+        <button class="btn btn-primary" onclick="addArticle()">Добавить позицию</button>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -21,41 +21,23 @@
                         <table class="table table-bordered text-gray-700 dataTable no-footer" id="dataTable_goods" role="grid" aria-describedby="dataTable_goods_info" style="width: 100%;" width="100%" cellspacing="0">
                             <thead>
                                 <tr style="font-size: 13px" role="row">
-                                    <th class="font-weight-normal text-uppercase sorting">ID</th>
+                                    <th class="font-weight-normal text-uppercase sorting">Номер</th>
+                                    <th class="font-weight-normal text-uppercase sorting">Артикул</th>
+                                    <th class="font-weight-normal text-uppercase sorting">Бренд</th>
                                     <th class="font-weight-normal text-uppercase sorting">Название</th>
-                                    <th class="font-weight-normal text-uppercase text-right">Действия</th>
+                                    <th class="font-weight-normal text-uppercase sorting">Количество</th>
+                                    <th class="font-weight-normal text-uppercase sorting">Цена</th>
+                                    <th class="font-weight-normal text-uppercase sorting">Цена Польша</th>
                                 </tr>
                             </thead>
                             <tbody class="ui-sortable">
-                                {% for manufacturer in manufacturers %}
-                                    <tr class="ui-sortable-handle odd">
-                                        <td class="text-left">
-                                            <span class="text-gray-900 font-weight-bold">
-                                                {{ manufacturer.manufacturer_id }}
-                                            </span>
-                                        </td>
-                                        <td class="text-left text-gray-900">
-                                            <span class="text-gray-900 font-weight-normal">
-                                                {{ manufacturer.name }}
-                                            </span>
-                                        </td>
-                                        <td class="text-right">
-                                            <a href="{% url 'manufacturer_update' manufacturer.manufacturer_id %}" title="Редактировать" class="text-gray-900" style="cursor: pointer; margin: 10px">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </a>
-                                            <a href="{% url 'manufacturer_delete' manufacturer.manufacturer_id %}" title="Удалить" class="text-gray-900" style="cursor: pointer; margin: 10px">
-                                                <i class="fa-sharp fa-solid fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="addManufacturerModal" class="modal" style="display: none;">
+        <div id="addArticleModal" class="modal" style="display: none;">
             <div role="document" class="modal-dialog" style="min-width: 400px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -81,10 +63,10 @@
             </div>
         </div>
         <script>
-
-            function addManufacturer() {
+            
+            function addArticle() {
                 
-                const modal = document.getElementById('addManufacturerModal');
+                const modal = document.getElementById('addArticleModal');
                 modal.style.display = "flex";
                 window.addEventListener("click", function(event) {
                     if (event.target == modal) {
@@ -103,7 +85,5 @@
                 box-shadow: 0 15px 25px rgba(0,0,0,.6);
             }
         </style>
-
-    
 </div>
 {% endblock data %}
