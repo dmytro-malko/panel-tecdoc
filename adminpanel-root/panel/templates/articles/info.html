@@ -28,9 +28,59 @@
                                     <th class="font-weight-normal text-uppercase sorting">Количество</th>
                                     <th class="font-weight-normal text-uppercase sorting">Цена</th>
                                     <th class="font-weight-normal text-uppercase sorting">Цена Польша</th>
+                                    <th class="font-weight-normal text-uppercase text-right">Действия</th>
                                 </tr>
                             </thead>
                             <tbody class="ui-sortable">
+                                {% if articles %}
+                                    {% for article in articles %}
+                                    <tr class="ui-sortable-handle odd">
+                                        <td class="text-left">
+                                            <span class="text-gray-900 font-weight-bold">
+                                                {{ article.number }}
+                                            </span>
+                                        </td>
+                                        <td class="text-left text-gray-900">
+                                            <span class="text-gray-900 font-weight-normal">
+                                                {{ article.article }}
+                                            </span>
+                                        </td>
+                                        <td class="text-left text-gray-900">
+                                            <span class="text-gray-900 font-weight-normal">
+                                                {{ article.manufacturer }}
+                                            </span>
+                                        </td>
+                                        <td class="text-left text-gray-900">
+                                            <span class="text-gray-900 font-weight-normal">
+                                                {{ article.name }}
+                                            </span>
+                                        </td>
+                                        <td class="text-left text-gray-900">
+                                            <span class="text-gray-900 font-weight-normal">
+                                                {{ article.quantity }}
+                                            </span>
+                                        </td>
+                                        <td class="text-left text-gray-900">
+                                            <span class="text-gray-900 font-weight-normal">
+                                                {{ article.price }}
+                                            </span>
+                                        </td>
+                                        <td class="text-left text-gray-900">
+                                            <span class="text-gray-900 font-weight-normal">
+                                                {{ article.price_poland }}
+                                            </span>
+                                        </td>
+                                        <td class="text-right">
+                                            <a href="{% url 'article_update' article.article_id %}" title="Редактировать" class="text-gray-900" style="cursor: pointer; margin: 10px">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                            <a href="" title="Удалить" class="text-gray-900" style="cursor: pointer; margin: 10px">
+                                                <i class="fa-sharp fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% endif %}
                             </tbody>
                         </table>
                     </div>
@@ -47,12 +97,20 @@
                         <form class="css-1c1nuln" method="post">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label>Номер поставщика из максиматора</label>
-                                <input type="number" value="" name="manufacturerId" id="manufacturerId" placeholder="12345" class="form-control">
+                                <label>Артикул</label>
+                                <input type="text" value="" name="article" id="article" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Название</label>
-                                <input type="text" value="" name="manufacturerName" id="manufacturerName" placeholder="Название" class="form-control">
+                                <input type="text" value="" name="name" id="name" placeholder="Название" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="cars">Бренд</label>
+                                <select name="manufacturer_id" id="manufacturer_id" class="form-control">
+                                    {% for manufacturer in manufacturers %}
+                                        <option value="{{manufacturer.manufacturer_id}}">{{manufacturer.name}}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div style="text-align: center;">
                                 <button type="submit" class="btn btn-success">Добавить</button>

@@ -1,0 +1,72 @@
+{% extends "panel/base.html" %}
+{% load static %}
+{% block data %}
+<form class="row" name="{% url 'article_update' article.article_id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-left"><i class="fas fa-fw fa-file-alt"></i>Редактирования позиции {{ article.number }}</h6>
+            </div>
+            <div class="card-body p-5">
+                <div class="form-group text-left">
+                    <label>Название<span class="text-danger">*</span></label>
+                    <input id="article_name" name="article_name" class="form-control" placeholder="{{ article.name }}" value="{{ article.name }}">
+                </div>
+                <div class="form-group text-left">
+                    <label>Артикул<span class="text-danger">*</span></label>
+                    <input id="article_article" name="article_article" class="form-control" placeholder="{{ article.article }}" value="{{ article.article }}">
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary font-weight-bold py-2 px-4 mr-4">
+            <i class="fa fa-save mr-1"></i> Сохранить
+        </button>
+    </div>
+    <div class="col-lg-5">
+        <div id="filename_sender">
+            {% if article.image %}
+                <img id="image" style="border-radius: 8px;width: 100%; " src="{% static article.image %}">
+            {% else %}
+                <img id="image" style="border-radius: 8px;width: 100%; visibility: hidden; " src="">
+            {% endif %}
+        </div>
+        <center>
+            <label for="file-upload" class="custom-file-upload">
+                <i class="fa fa-cloud-upload"></i> Выберите изображение
+            </label>
+            <input id="file-upload" type="file" style="display: none;" name="welcome_image">
+            <input id="delete-file" type="hidden" name="delete_file" value="false">
+            <div id="btn_del">
+                <a class="mt-4 text-danger" onclick="del_photo();" style="cursor:pointer;">Удалить изображение</a>
+            </div>
+        </center>
+    </div>
+</form>
+<script>
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+                document.querySelector("#image").style.visibility = "visible";
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#file-upload").change(function(){
+        del_photo();
+        readURL(this);
+    });
+
+    function del_photo() {
+        document.querySelector("#image").src = "";
+        document.querySelector("#delete-file").value = "true";
+    }
+</script>
+{% endblock %}

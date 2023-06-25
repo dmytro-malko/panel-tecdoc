@@ -20,13 +20,22 @@ class Manufacturer(models.Model):
     manufacturer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, verbose_name="Manufacturer name")
 
+    def __str__(self):
+        return self.name
+
 class Articles(models.Model):
     article_id = models.AutoField(primary_key=True)
-    manufacturer_id = models.IntegerField(null=True)
+    number = models.CharField(max_length=255, null=True)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, null=True)
     article = models.CharField(max_length=255)
     article_clean = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
-    quantity = models.CharField(max_length=5, null=True)
-    stock_status = models.CharField(max_length=5, null=True)
-    price = models.DecimalField(max_digits = 10 , decimal_places = 2 , null=True)
-    price_poland = models.DecimalField(max_digits = 10 , decimal_places = 2 , null=True)
+    quantity = models.IntegerField(null=True, default=0)
+    image = models.CharField(max_length=255, null=True)
+    stock_status = models.IntegerField(null=True, default=0)
+    price = models.IntegerField(null=True, default=0)
+    price_poland = models.IntegerField(null=True, default=0)
+
+# class Cars_to_Articles(models.Model):
+#     car = models.ForeignKey(MarksModels, on_delete=models.PROTECT, null=True)
+#     article = models.ForeignKey(Articles, on_delete=models.PROTECT, null=True)

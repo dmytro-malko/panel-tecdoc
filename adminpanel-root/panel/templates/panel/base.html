@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <link href="{% static 'img/favicon.png' %}" rel="shortcut icon" type="image/x-icon">
         <link href="{% static 'img/favicon.png' %}" rel="icon" type="image/x-icon">
         <title>Панель управления</title>
@@ -56,19 +57,13 @@
         <div id="wrapper">
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="z-index: 13">
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                     <div class="sidebar-brand-icon mt-4">
-                        <img src="{% static 'img/logotype.png' %}" id="logo" height="35">
+                        <img src="{% static 'img/logotype.png' %}" id="logo" height="50">
                     </div>
                 </a>
                 <!-- Divider -->
                 <!-- Nav Item - Dashboard -->
-                <li class="nav-item mt-3">
-                    <a class="nav-link" href="{% url 'users' %}">
-                        <i style="margin-right: 10px" class="fa-solid fa-user"></i>
-                        <span>Пользователи</span>
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'manufacturers' %}">
                         <i style="margin-right: 10px" class="fa-solid fa-envelopes-bulk"></i>
@@ -137,22 +132,23 @@
                     <div class="container-fluid">
                         <!-- DataTales Example -->
                             {% block data %} {% endblock data %}
+                        {% if page_obj %}
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li><a class="enable" href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                            {% else%}
+                                <li><a>&lt;</a></li>
+                            {% endif %}
+                            <li><a class="active">{{ page_obj.number }}</a></li>
+                            {% if page_obj.has_next %}
+                                <li><a class="enable" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                            {% else%}
+                                <li><a class="disabled">&gt;</a></li>
+                            {% endif %}
+                        </ul>
+                        {% endif %}
                     </div>
-                    {% if page_obj %}
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li><a class="enable" href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
-                        {% else%}
-                            <li><a>&lt;</a></li>
-                        {% endif %}
-                        <li><a class="active">{{ page_obj.number }}</a></li>
-                        {% if page_obj.has_next %}
-                            <li><a class="enable" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
-                        {% else%}
-                            <li><a class="disabled">&gt;</a></li>
-                        {% endif %}
-                    </ul>
-                    {% endif %}
+                    
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
@@ -180,8 +176,11 @@
                 document.querySelector("#carsSections").classList.toggle("collapsed");
                 document.querySelector("#collapseTwoCar").classList.toggle("show");
             }
+            document.querySelector("#userDropdown").onclick = function () {
+                document.querySelector("#userDropdownMenu").classList.toggle("show");
+            }
         </script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha256-yE5LLp5HSQ/z+hJeCqkz9hdjNkk1jaiGG0tDCraumnA=" crossorigin="anonymous"></script>
         <script type="text/javascript">
             {% block js_script %} 

@@ -8,8 +8,19 @@ def show(request):
         return redirect("/login/")
     
     if request.method == "GET":
+
+        if request.GET.get("search_manufacturer"):
+            manufacturer = manufacturers_api.get_by_name(request.GET.get("search_manufacturer"))
+            return render(
+            request=request,
+            template_name="manufacturers/manufacturers.html",
+            context={
+            "manufacturer" : manufacturer
+            }
+        )
+
         manufacturers = manufacturers_api.get_all()
-        paginator = Paginator(manufacturers, 50)
+        paginator = Paginator(manufacturers, 25)
 
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)

@@ -4183,6 +4183,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 .pagination {
     width: 185px;
     margin: 0 auto;
+    margin-bottom: 20px;
     padding: 10px;
     background-color: #fff;
     border-radius: 40px;
@@ -9316,7 +9317,7 @@ a:focus{
 }
 .sidebar-dark .sidebar-brand{
     color:#ff9100;
-    margin-bottom:8px
+    margin-bottom:20px
 }
 .sidebar-dark hr.sidebar-divider{
     border-top:1px solid #2c8cd5

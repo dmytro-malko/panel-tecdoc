@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
-from panel.db_api import articles_api
+from panel.db_api import articles_api, manufacturers_api
 
 def show(request):
     if not request.user.is_authenticated:
@@ -8,6 +8,7 @@ def show(request):
     
     if request.method == "GET":
 
+        manufacturers = manufacturers_api.get_all()
         articles = articles_api.get_all()
         paginator = Paginator(articles, 50)
 
@@ -18,6 +19,41 @@ def show(request):
             template_name="articles/info.html",
             context={
             "articles" : page_obj.object_list,
+            "manufacturers" : manufacturers,
             "page_obj": page_obj
+            }
+        )
+    
+    if request.method == "POST":
+        manufacturer_id = request.POST['manufacturer_id']
+        article = request.POST['article']
+        name = request.POST['name']
+        articles_api.create(manufacturer_id, article, name)
+        return redirect("/articles/")
+    
+def update(request, article_id: int):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+    
+    if request.method == "POST":
+        # articles_api.update(
+        #     article_id,
+        #     name=request.POST['manufacturer_name']
+        # )
+
+        print(request.POST)
+        print(request.FILES['welcome_image'])
+        return redirect(f"/articles/update/{article_id}")
+
+    if request.method == "GET":
+        article = articles_api.get(int(article_id))
+        if not article:
+            return redirect("/articles/")
+
+        return render(
+            request=request,
+            template_name="articles/update.html",
+            context={
+                "article" : article
             }
         )

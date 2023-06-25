@@ -18,6 +18,15 @@ def get(manufacturer_id: int) -> Manufacturer:
     
     return record
 
+def get_by_name(name: int) -> Manufacturer:
+
+    try:
+        record = Manufacturer.objects.get(name=name)
+    except Manufacturer.DoesNotExist:
+        return
+    
+    return record
+
 def delete(manufacturer_id: int):
 
     record = get(manufacturer_id)
@@ -49,5 +58,5 @@ def update(
 
 def get_all() -> Manufacturer:
     
-    records = Manufacturer.objects.order_by("manufacturer_id")
+    records = Manufacturer.objects.order_by("name")
     return records
