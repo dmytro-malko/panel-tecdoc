@@ -9964,3 +9964,23 @@ table.dataTable{
 a#block-link:hover {
     text-decoration: none;
 }
+
+@media (max-width: 767px) {
+    .marks-list {
+        grid-template-columns: 1fr !important;
+    }
+    .card-header {
+        padding: 0;
+    }
+
+    .sidebar {
+        display: none;
+        position: fixed;
+    }
+    .save-button {
+        margin: 10px auto;
+    }
+    .sidebar-brand {
+        display: none;
+    }
+}

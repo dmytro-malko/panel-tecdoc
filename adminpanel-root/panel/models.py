@@ -36,6 +36,8 @@ class Articles(models.Model):
     price = models.IntegerField(null=True, default=0)
     price_poland = models.IntegerField(null=True, default=0)
 
-# class Cars_to_Articles(models.Model):
-#     car = models.ForeignKey(MarksModels, on_delete=models.PROTECT, null=True)
-#     article = models.ForeignKey(Articles, on_delete=models.PROTECT, null=True)
+class Cars_to_Articles(models.Model):
+    car = models.ForeignKey(MarksModels, on_delete=models.PROTECT, null=True)
+    article = models.ForeignKey(Articles, on_delete=models.PROTECT, null=True)
+    year_from = models.CharField(max_length=10)
+    year_to = models.CharField(max_length=10)

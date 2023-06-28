@@ -1,6 +1,9 @@
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
-from panel.db_api import articles_api, manufacturers_api
+from panel.db_api import articles_api, manufacturers_api, cars_api
+
+from panel.models import Cars_to_Articles
+
 
 def show(request):
     if not request.user.is_authenticated:
@@ -42,11 +45,19 @@ def update(request, article_id: int):
         # )
 
         print(request.POST)
-        print(request.FILES['welcome_image'])
+        print(article_id)
+        if request.POST['delete_file'] == 'true':
+            try:
+                print(request.FILES['welcome_image'])
+            except:
+                pass
         return redirect(f"/articles/update/{article_id}")
 
     if request.method == "GET":
         article = articles_api.get(int(article_id))
+        cars = Cars_to_Articles.objects.filter(article_id=article_id).order_by('car_id')
+        marks = cars_api.get_all_marks()
+
         if not article:
             return redirect("/articles/")
 
@@ -54,6 +65,8 @@ def update(request, article_id: int):
             request=request,
             template_name="articles/update.html",
             context={
-                "article" : article
+                "article" : article,
+                "cars": cars,
+                "marks": marks
             }
         )

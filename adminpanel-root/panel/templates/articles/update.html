@@ -6,23 +6,34 @@
     <div class="col-lg-7">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-left"><i class="fas fa-fw fa-file-alt"></i>Редактирования позиции {{ article.number }}</h6>
+                <h6 class="m-0 font-weight-bold text-center"><i class="fas fa-fw fa-file-alt"></i>{{ article.number }}</h6>
             </div>
             <div class="card-body p-5">
                 <div class="form-group text-left">
                     <label>Название<span class="text-danger">*</span></label>
-                    <input id="article_name" name="article_name" class="form-control" placeholder="{{ article.name }}" value="{{ article.name }}">
+                    <input id="name" name="name" class="form-control" placeholder="{{ article.name }}" value="{{ article.name }}">
                 </div>
                 <div class="form-group text-left">
                     <label>Артикул<span class="text-danger">*</span></label>
-                    <input id="article_article" name="article_article" class="form-control" placeholder="{{ article.article }}" value="{{ article.article }}">
+                    <input id="article" name="article" class="form-control" placeholder="{{ article.article }}" value="{{ article.article }}" readonly>
+                </div>
+                <div class="form-group text-left">
+                    <label>Бренд</label>
+                    <input id="manufacturer" name="manufacturer" class="form-control" placeholder="{{ article.manufacturer }}" value="{{ article.manufacturer }}" readonly>
+                </div>
+                <div class="form-group text-left">
+                    <label>Цена</label>
+                    <input id="price" name="price" class="form-control" placeholder="{{ article.price }}" value="{{ article.price }}" readonly>
+                </div>
+                <div class="form-group text-left">
+                    <label>Цена Польша</label>
+                    <input id="price_poland" name="price_poland" class="form-control" placeholder="{{ article.price_poland }}" value="{{ article.price_poland }}" readonly>
                 </div>
             </div>
+            
         </div>
         
-        <button class="btn btn-primary font-weight-bold py-2 px-4 mr-4">
-            <i class="fa fa-save mr-1"></i> Сохранить
-        </button>
+        
     </div>
     <div class="col-lg-5">
         <div id="filename_sender">
@@ -43,8 +54,89 @@
             </div>
         </center>
     </div>
+    <div class="save-button">
+        <button class="btn btn-primary font-weight-bold py-2 px-4 mr-4">
+            <i class="fa fa-save mr-1"></i> Сохранить
+        </button>
+    </div>
 </form>
+
+<div class="card-body" style="background: white; margin-top: 10px">
+    <div class="card-header d-flex align-items-center">
+        <h5 class="mr-auto m-0" style="display: flex; align-items: baseline;">
+            <i style="margin-right: 10px" class="fa-solid fa-envelopes-bulk"></i>
+            Применение
+        </h5>
+        <button class="btn btn-primary" onclick="addApplication()">Добавить</button>
+    </div>
+    {% if cars %}
+    <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <div class="row">
+            <div class="marks-list">
+                {% for car in cars %}
+                    <span>
+                        {{car.car.mark}} {{car.car.model}} {{car.year_from}}-{{car.year_to}}
+                        <a href="" title="Удалить" class="text-gray-900 text-right" style="cursor: pointer; margin: 10px">
+                            <i class="fa-sharp fa-solid fa-trash"></i>
+                        </a>
+                    </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div id="addApplicationModal" class="modal" style="display: none;">
+    <div role="document" class="modal-dialog" style="min-width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="exampleModalLabel" class="modal-title">Добавить</h4>
+            </div>
+            <div class="modal-body">
+                <form class="css-1c1nuln" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Марка</label>
+                        <select name="mark_name" id="cars" class="form-control">
+                            {% for mark in marks %}
+                                <option value="{{mark.name}}">{{mark.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Модель</label>
+                        <input type="text" value="" name="model_name" id="model_name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Год С</label>
+                        <input type="text" value="" name="years_from" id="years_from" placeholder="2012" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Год По</label>
+                        <input type="text" value="" name="years_to" id="years_to" placeholder="2015" class="form-control">
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-success">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+    function addApplication() {
+            
+        const modal = document.getElementById('addApplicationModal');
+        modal.style.display = "flex";
+        window.addEventListener("click", function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        
+        })
+    };
+
     function readURL(input) {
 
         if (input.files && input.files[0]) {
@@ -69,4 +161,29 @@
         document.querySelector("#delete-file").value = "true";
     }
 </script>
+<style>
+    
+    .marks-list {
+        grid-template-columns: repeat(3, 1fr);
+        display: grid;
+        gap: 8px;
+        width: 100%;
+        margin: 10px 10px 30px;
+    }
+
+    .marks-list span {
+        padding: 11px 35px 11px 19px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        break-inside: avoid-column;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 3px;
+        border: 1px solid rgb(225, 231, 236);
+        color: rgb(96, 105, 117);
+        transition: all 0.3s ease 0s;
+        position: relative;
+    }
+</style>
 {% endblock %}
