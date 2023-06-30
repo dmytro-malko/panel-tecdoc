@@ -31,7 +31,6 @@ class Articles(models.Model):
     article_clean = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     quantity = models.IntegerField(null=True, default=0)
-    image = models.CharField(max_length=255, null=True)
     stock_status = models.IntegerField(null=True, default=0)
     price = models.IntegerField(null=True, default=0)
     price_poland = models.IntegerField(null=True, default=0)
@@ -41,3 +40,7 @@ class Cars_to_Articles(models.Model):
     article = models.ForeignKey(Articles, on_delete=models.PROTECT, null=True)
     year_from = models.CharField(max_length=10)
     year_to = models.CharField(max_length=10)
+
+class Articles_Images(models.Model):
+    article = models.ForeignKey(Articles, on_delete=models.PROTECT, null=True)
+    image = models.CharField(max_length=255, null=True)

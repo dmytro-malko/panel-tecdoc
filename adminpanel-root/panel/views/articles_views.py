@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from panel.db_api import articles_api, manufacturers_api, cars_api
 
-from panel.models import Cars_to_Articles
+from panel.models import Cars_to_Articles, Articles_Images
 
 
 def show(request):
@@ -56,6 +56,7 @@ def update(request, article_id: int):
     if request.method == "GET":
         article = articles_api.get(int(article_id))
         cars = Cars_to_Articles.objects.filter(article_id=article_id).order_by('car_id')
+        images = Articles_Images.objects.filter(article_id=article_id)
         marks = cars_api.get_all_marks()
 
         if not article:
@@ -67,6 +68,7 @@ def update(request, article_id: int):
             context={
                 "article" : article,
                 "cars": cars,
-                "marks": marks
+                "marks": marks,
+                "images": images
             }
         )

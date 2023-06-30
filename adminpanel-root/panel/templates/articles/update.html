@@ -37,8 +37,10 @@
     </div>
     <div class="col-lg-5">
         <div id="filename_sender">
-            {% if article.image %}
-                <img id="image" style="border-radius: 8px;width: 100%; " src="{% static article.image %}">
+            {% if images %}
+                {% for image in images %}
+                <img id="image" style="border-radius: 8px;width: 100%; " src="{% static image.image %}">
+                {% endfor %}
             {% else %}
                 <img id="image" style="border-radius: 8px;width: 100%; visibility: hidden; " src="">
             {% endif %}
