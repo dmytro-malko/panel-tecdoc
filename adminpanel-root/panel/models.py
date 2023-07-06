@@ -20,8 +20,8 @@ class Manufacturer(models.Model):
     manufacturer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, verbose_name="Manufacturer name")
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 class Articles(models.Model):
     article_id = models.AutoField(primary_key=True)
@@ -35,11 +35,17 @@ class Articles(models.Model):
     price = models.IntegerField(null=True, default=0)
     price_poland = models.IntegerField(null=True, default=0)
 
+    class Meta:
+        unique_together = ['manufacturer', 'article', 'article_clean']
+        indexes = [
+            models.Index(fields=['manufacturer', 'article', 'article_clean'])
+        ]
+
 class Cars_to_Articles(models.Model):
     car = models.ForeignKey(MarksModels, on_delete=models.PROTECT, null=True)
     article = models.ForeignKey(Articles, on_delete=models.PROTECT, null=True)
     year_from = models.CharField(max_length=10)
-    year_to = models.CharField(max_length=10)
+    year_to = models.CharField(max_length=10, null=True)
 
 class Articles_Images(models.Model):
     article = models.ForeignKey(Articles, on_delete=models.PROTECT, null=True)

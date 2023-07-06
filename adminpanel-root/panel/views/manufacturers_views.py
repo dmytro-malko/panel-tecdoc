@@ -50,7 +50,7 @@ def update(request, manufacturer_id: int):
             manufacturer_id,
             name=request.POST['manufacturer_name']
         )
-        return redirect(f"/manufacturers/update/{manufacturer_id}")
+        return redirect(f"/manufacturer/update/{manufacturer_id}")
 
     if request.method == "GET":
         manufacturer = manufacturers_api.get(int(manufacturer_id))

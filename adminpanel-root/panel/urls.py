@@ -9,6 +9,7 @@ urlpatterns = [
     
     path('articles/', articles_views.show, name='articles'),
     path('articles/update/<int:article_id>', articles_views.update, name="article_update"),
+    path('articles/delete/<int:article_id>', articles_views.delete, name="article_delete"),
 
     path('cars/', cars_views.show, name='cars'),
     path('cars/mark_delete/<int:mark_id>', cars_views.show, name='mark_delete'),

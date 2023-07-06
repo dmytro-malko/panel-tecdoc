@@ -11,6 +11,12 @@
             <i style="margin-right: 10px" class="fa-solid fa-envelopes-bulk"></i>
              Товары
         </h5>
+        <form method="get" style="margin: 0 auto" class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" name="search_article" placeholder="Поиск">
+            </div>
+            <button class="btn btn-success" style="margin-left: 10px">Поиск</button>
+        </form>
         <button class="btn btn-primary" onclick="addArticle()">Добавить позицию</button>
     </div>
     <div class="card-body">
@@ -47,7 +53,7 @@
                                         </td>
                                         <td class="text-left text-gray-900">
                                             <span class="text-gray-900 font-weight-normal">
-                                                {{ article.manufacturer }}
+                                                {{ article.manufacturer.name }}
                                             </span>
                                         </td>
                                         <td class="text-left text-gray-900">
@@ -74,7 +80,7 @@
                                             <a href="{% url 'article_update' article.article_id %}" title="Редактировать" class="text-gray-900" style="cursor: pointer; margin: 10px">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </a>
-                                            <a href="" title="Удалить" class="text-gray-900" style="cursor: pointer; margin: 10px">
+                                            <a href="{% url 'article_delete' article.article_id %}" title="Удалить" class="text-gray-900" style="cursor: pointer; margin: 10px">
                                                 <i class="fa-sharp fa-solid fa-trash"></i>
                                             </a>
                                         </td>

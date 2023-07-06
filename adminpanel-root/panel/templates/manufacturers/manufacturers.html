@@ -57,26 +57,28 @@
                                         </tr>
                                     {% endfor %}
                                 {% elif manufacturer %}
+                                    {% for man in manufacturer %}
                                     <tr class="ui-sortable-handle odd">
                                         <td class="text-left">
                                             <span class="text-gray-900 font-weight-bold">
-                                                {{ manufacturer.manufacturer_id }}
+                                                {{ man.manufacturer_id }}
                                             </span>
                                         </td>
                                         <td class="text-left text-gray-900">
                                             <span class="text-gray-900 font-weight-normal">
-                                                {{ manufacturer.name }}
+                                                {{ man.name }}
                                             </span>
                                         </td>
                                         <td class="text-right">
-                                            <a href="{% url 'manufacturer_update' manufacturer.manufacturer_id %}" title="Редактировать" class="text-gray-900" style="cursor: pointer; margin: 10px">
+                                            <a href="{% url 'manufacturer_update' man.manufacturer_id %}" title="Редактировать" class="text-gray-900" style="cursor: pointer; margin: 10px">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </a>
-                                            <a href="{% url 'manufacturer_delete' manufacturer.manufacturer_id %}" title="Удалить" class="text-gray-900" style="cursor: pointer; margin: 10px">
+                                            <a href="{% url 'manufacturer_delete' man.manufacturer_id %}" title="Удалить" class="text-gray-900" style="cursor: pointer; margin: 10px">
                                                 <i class="fa-sharp fa-solid fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
+                                    {% endfor %}
                                 {% endif %}
                             </tbody>
                         </table>

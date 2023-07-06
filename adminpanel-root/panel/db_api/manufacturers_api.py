@@ -1,4 +1,5 @@
 from panel.models import Manufacturer
+from django.db.models import Q
 
 
 def create(manufacturer_id: int, name: str) -> Manufacturer:
@@ -21,7 +22,7 @@ def get(manufacturer_id: int) -> Manufacturer:
 def get_by_name(name: int) -> Manufacturer:
 
     try:
-        record = Manufacturer.objects.get(name=name)
+        record = Manufacturer.objects.filter(Q(name__icontains=name))
     except Manufacturer.DoesNotExist:
         return
     

@@ -1,7 +1,8 @@
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
-from panel.db_api import articles_api, manufacturers_api, cars_api
+from django.contrib import messages
 
+from panel.db_api import articles_api, manufacturers_api, cars_api
 from panel.models import Cars_to_Articles, Articles_Images
 
 
@@ -10,8 +11,19 @@ def show(request):
         return redirect("/login/")
     
     if request.method == "GET":
-
         manufacturers = manufacturers_api.get_all()
+
+        if request.GET.get("search_article"):
+            articles = articles_api.get_by_article(request.GET.get("search_article"))
+            return render(
+                request=request,
+                template_name="articles/info.html",
+                context={
+                "articles" : articles,
+                "manufacturers" : manufacturers,
+                }
+            )
+
         articles = articles_api.get_all()
         paginator = Paginator(articles, 50)
 
@@ -31,8 +43,12 @@ def show(request):
         manufacturer_id = request.POST['manufacturer_id']
         article = request.POST['article']
         name = request.POST['name']
-        articles_api.create(manufacturer_id, article, name)
-        return redirect("/articles/")
+        article_id = articles_api.create(manufacturer_id, article, name)
+        if article_id:
+            return redirect(f"/articles/update/{article_id}")
+        else:
+            messages.error(request, 'Такой уже есть')
+            return redirect("/articles/")
     
 def update(request, article_id: int):
     if not request.user.is_authenticated:
@@ -72,3 +88,15 @@ def update(request, article_id: int):
                 "images": images
             }
         )
+    
+def delete(request, article_id: int):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+    
+    if request.method != "GET":
+        return
+
+    articles_api.delete(
+        article_id
+    )
+    return redirect(f"/articles/")
